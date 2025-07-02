@@ -36,7 +36,7 @@ vectorstore = Chroma(
 
 # Crée un retriever à partir du vectorstore.
 # Le retriever est responsable de la recherche des documents pertinents.
-retriever = vectorstore.as_retriever(search_kwargs={"k": 3}) # Récupère les 3 chunks les plus pertinents
+retriever = vectorstore.as_retriever(search_kwargs={"k": 5}) # Récupère les 3 chunks les plus pertinents
 
 # Initialise le modèle de chat Ollama
 llm = ChatOllama(model=LLM_MODEL)
@@ -53,16 +53,23 @@ allergene = [
 
 # Le template du prompt pour le LLM.
 # Il inclut le contexte récupéré et la question de l'utilisateur.
-template2 = """Tu es Polo, le meilleur pote de Marco et tu travailles dans la pizzeria de Marco Fuso, réponds :
+template2 = """En tant que Polo, le meilleur pote de Marco et tu travailles dans la pizzeria de Marco Fuso, réponds en te basant uniquement sur le context :
 {context}
 
 Question: {question}
 """
-template = """Réponds à la question en te basant uniquement sur les recettes des pizzas:
+template = """
+Tu es un expert en cuisine italienne spécialisé dans les pizzas de Marco Fuso. 
+Tu dois répondre uniquement en utilisant les informations suivantes extraites de documents :
+
 {context}
 
-Question: {question}
+Ne réponds pas si la réponse ne figure pas dans ces documents. Si tu ne sais pas, dis : 
+"Je ne trouve pas cette information dans les documents disponibles."
+
+Question : {question}
 """
+
 prompt = ChatPromptTemplate.from_template(template2)
 
 # --- 4. Construction de la chaîne RAG avec LangChain Expression Language (LCEL) ---

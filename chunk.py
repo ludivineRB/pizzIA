@@ -28,7 +28,7 @@ EMBEDDING_MODEL = "mxbai-embed-large"
 # --- 2. Chargement et découpage du document ---
 
 
-def load_and_chunk_pdf(file_path, chunk_size=1000, chunk_overlap=200):
+def load_and_chunk_pdf(file_path, chunk_size=500, chunk_overlap=100):
     """
     Charge un fichier PDF, en extrait le texte et le découpe en morceaux (chunks).
     """

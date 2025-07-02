@@ -18,3 +18,4 @@ psycopg2-binary
 crewai
 crewai_tools
 gradio
+sentence-transformers
